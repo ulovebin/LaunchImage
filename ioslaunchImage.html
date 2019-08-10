@@ -1,108 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0,user-scalable=no;"/>
-    <title>html5生成iOS启动图</title>
-    <style type="text/css">
-        .main{
-             text-align: center; /*让div内部文字居中*/
-             background-color: #fff;
-             border-radius: 20px;
-             width: 300px;
-             height: 350px;
-             margin: auto;
-             position: absolute;
-             top: 0;
-             left: 0;
-             right: 0;
-             bottom: 0;
-        }
-
-         .up-file {
-             padding: 4px 10px;
-             height: 40px;
-             width: 240px;
-             text-align: center;
-             line-height: 40px;
-             position: relative;
-             cursor: pointer;
-             background: #44bbff;
-             color: #FFFFFF;
-             border: 1px solid #ddd;
-             border-radius: 4px;
-             overflow: hidden;
-             display: inline;
-             zoom: 1;
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0,user-scalable=no;"/>
+        <title>html5生成iOS启动图</title>
+        <style type="text/css">
+            .main{
+                text-align: center; /*让div内部文字居中*/
+                background-color: #fff;
+                border-radius: 20px;
+                width: 300px;
+                height: 350px;
+                margin: auto;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+        
+        .up-file {
+            padding: 4px 10px;
+            height: 40px;
+            width: 240px;
+            text-align: center;
+            line-height: 40px;
+            position: relative;
+            cursor: pointer;
+            background: #44bbff;
+            color: #FFFFFF;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            display: inline;
+            zoom: 1;
         }
         .up-file input {
-             position: absolute;
-             font-size: 100px;
-             right: 0;
-             top: 0;
-             opacity: 0;
-             cursor: pointer;
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
         }
         .remark {
-        	 width: 300px;
-        	 font-size: 12px;
-        	 color: red;
-        	 text-align: left;
-        	 margin-left: 15px;
+            width: 300px;
+            font-size: 12px;
+            color: red;
+            text-align: left;
+            margin-left: 15px;
         }
         .divmargin-top {
-        	margin-top: 20px;
+            margin-top: 20px;
         }
-    </style>
-</head>
-<body>
-<div class="main">
-	<canvas id="canvas" style="border:1px solid #c3c3c3;display:none;"></canvas>
-    <a class="up-file">
-       <input type="file" onchange="changeFile(event);" />选取图片生成指定尺寸图片
-    </a>
-    <div class="divmargin-top">
- 	   <div class="remark">1、在picConfigure中配置图片名称和对应图片尺寸</div>
-       <div class="remark">2、选取图片后会自动生成并下载图片</div>
-    </div>
-</div>
-<script type="text/javascript">
-	function changeFile(event) {
-		file = event.target.files[0];
-		var a = new FileReader();
-		a.onload = function (e) {
-			var base64Str = e.target.result;//获取base64
-			var image = new Image();
-			image.src = base64Str;
-			var picConfigure = [
-				{name: "Default-568h@2x-1.png", width: 640, height: 1136},
-				{name: "Default-568h@2x.png", width: 640, height: 1136},
-				{name: "Default@2x-1.png", width: 640, height: 960},
-				{name: "Default@2x.png", width: 640, height: 960},
-				{name: "Loading@2x.png", width: 750, height: 1334},
-				{name: "Loading@3x.png", width: 1242, height: 2208},
-				{name: "LoadingX@3x.png", width: 1125, height: 2436},]
-			setTimeout(function () {
-				for (var i = 0; i < picConfigure.length; i++) {
-					var canvas = document.getElementById("canvas");
-					var context = canvas.getContext("2d");
-					var width=picConfigure[i].width, height=picConfigure[i].height;
-					canvas.setAttribute("width", width + "px");
-					canvas.setAttribute("height", height + "px");
-					context.drawImage(image,0,0,width,height);
-					downLoadCanvasImage(canvas, picConfigure[i].name)
-				}
-			},500)
-
-		}
-		a.readAsDataURL(file);
-	}
-
-	function downLoadCanvasImage(canvas, name) {
-		var a = document.createElement("a");
-		a.href = canvas.toDataURL();
-		a.download = name || '下载图片名称';
-		a.click();
-	}
-</script>
-</body>
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <canvas id="canvas" style="border:1px solid #c3c3c3;display:none;"></canvas>
+            <a class="up-file">
+                <input type="file" onchange="changeFile(event);" />选取图片生成指定尺寸图片
+            </a>
+            <div class="divmargin-top">
+                <div class="remark">1、在picConfigure中配置图片名称和对应图片尺寸</div>
+                <div class="remark">2、选取图片后会自动生成并下载图片</div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function changeFile(event) {
+                file = event.target.files[0];
+                var a = new FileReader();
+                a.onload = function (e) {
+                    var base64Str = e.target.result;//获取base64
+                    var image = new Image();
+                    image.src = base64Str;
+                    var picConfigure = [
+                                        {name: "Default-568h@2x-1.png", width: 640, height: 1136},
+                                        {name: "Default-568h@2x.png", width: 640, height: 1136},
+                                        {name: "Default@2x-1.png", width: 640, height: 960},
+                                        {name: "Default@2x.png", width: 640, height: 960},
+                                        {name: "Loading@2x.png", width: 750, height: 1334},
+                                        {name: "Loading@3x.png", width: 1242, height: 2208},
+                                        {name: "LoadingX@3x.png", width: 1125, height: 2436},]
+                                        setTimeout(function () {
+                                                   for (var i = 0; i < picConfigure.length; i++) {
+                                                   var canvas = document.getElementById("canvas");
+                                                   var context = canvas.getContext("2d");
+                                                   var width=picConfigure[i].width, height=picConfigure[i].height;
+                                                   canvas.setAttribute("width", width + "px");
+                                                   canvas.setAttribute("height", height + "px");
+                                                   context.drawImage(image,0,0,width,height);
+                                                   downLoadCanvasImage(canvas, picConfigure[i].name)
+                                                   }
+                                                   },500)
+                                                   
+                }
+                a.readAsDataURL(file);
+            }
+        
+        function dataURLtoBlob(dataurl) {
+            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], {type:mime});
+        }
+        function downLoadCanvasImage(canvas, name) {
+            var a = document.createElement("a");
+            var imgData = canvas.toDataURL();
+            var strDataURI = imgData.substr(22, imgData.length);
+            var blob = this.dataURLtoBlob(imgData);
+            var objurl = URL.createObjectURL(blob);
+            a.href = objurl;
+            
+            console.log("1111", a.href)
+            a.download = name || '下载图片名称';
+            a.click();
+        }
+        </script>
+    </body>
 </html>
+
